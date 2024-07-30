@@ -17,6 +17,7 @@ model User {
   sessions      Session[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  stripeId String?
 }
  
 model Account {
