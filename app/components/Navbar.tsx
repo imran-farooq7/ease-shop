@@ -3,11 +3,15 @@ import { signIn, signOut } from "next-auth/react";
 import { User } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useCartStore } from "@/store/CartProvider";
+import Cart from "./Cart";
+import { AiFillShopping } from "react-icons/ai";
 interface Props {
 	user: User;
 }
 
 const Navbar = ({ user }: Props) => {
+	const { isOpen, cart } = useCartStore();
 	return (
 		<nav className="flex justify-between mt-5 items-center">
 			<Link href={"/"}>
@@ -20,6 +24,12 @@ const Navbar = ({ user }: Props) => {
 				/>
 			</Link>
 			<ul className="flex items-center gap-5">
+				<li className="relative cursor-pointer">
+					<AiFillShopping size={30} />
+					<span className="absolute flex items-center justify-center font-bold bg-teal-700 text-sm text-white rounded-full w-5 h-5 left-4 bottom-4">
+						{cart.length}
+					</span>
+				</li>
 				<li>
 					{!user && (
 						<button
@@ -40,6 +50,7 @@ const Navbar = ({ user }: Props) => {
 					)}
 				</li>
 			</ul>
+			{isOpen && <Cart />}
 		</nav>
 	);
 };
