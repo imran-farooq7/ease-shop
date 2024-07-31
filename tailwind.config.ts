@@ -11,6 +11,9 @@ const config: Config = {
 			container: {
 				padding: "3rem",
 			},
+			gridTemplateColumns: {
+				fluid: "repeat(auto-fit,minmax(15rem,1fr))",
+			},
 		},
 	},
 	plugins: [],
