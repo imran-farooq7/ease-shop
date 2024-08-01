@@ -1,4 +1,5 @@
 // import AddCart from "@/app/components/AddCart";
+import AddCart from "@/app/components/AddToCart";
 import { priceFormatter } from "@/utils/helpers";
 import Image from "next/image";
 
@@ -29,9 +30,7 @@ const ProductDetails = ({ searchParams, params }: Props) => {
 						{priceFormatter(price)}
 					</p>
 				</div>
-				<button className="w-full text-white my-12 font-medium px-7 py-3 rounded-xl bg-sky-500 self-start hover:opacity-70">
-					Add to cart
-				</button>
+				<AddCart {...searchParams} id={params.id} />
 			</div>
 		</div>
 	);
