@@ -1,3 +1,4 @@
+import { cartItem } from "@/store/store";
 import { stripe } from "./Constants";
 
 export const getProducts = async () => {
@@ -25,3 +26,8 @@ export const priceFormatter = (price: number) => {
 	});
 	return formatter.format(Number(price));
 };
+export const totalPrice = (cart:cartItem[]) => {
+	return cart.reduce((acc, item) => {
+		return acc + item.price * item.quantity!;
+	}, 0);
+}

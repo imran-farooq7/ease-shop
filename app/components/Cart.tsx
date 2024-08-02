@@ -1,7 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/CartProvider";
-import { priceFormatter } from "@/utils/helpers";
+import { priceFormatter, totalPrice } from "@/utils/helpers";
 import Image from "next/image";
 import { IoRemoveCircle, IoAddCircle } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
@@ -9,6 +9,7 @@ import { SlBasket } from "react-icons/sl";
 const Cart = () => {
 	const { toggleCart, cart, addCart, removeCart } = useCartStore();
 	let content: string | JSX.Element;
+	const TotalPrice = totalPrice(cart)
 	if (cart.length === 0) {
 		content = (
 			<div className="flex flex-col items-center gap-4 text-2xl font-medium">
@@ -56,12 +57,13 @@ else {
 						</div>
 					</div>
 				))}
-				
+				<p>Total: {priceFormatter(TotalPrice)}</p>
+				<button className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white">
+			Checkout
+		    </button>
 			</div>
 		);
-		<button className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white">
-			Checkout
-		</button>;
+		
 	}
 
 	return (
