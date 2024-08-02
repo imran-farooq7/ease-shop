@@ -2,6 +2,7 @@
 
 import { useCartStore } from "@/store/CartProvider";
 import { priceFormatter, totalPrice } from "@/utils/helpers";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { IoRemoveCircle, IoAddCircle } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
@@ -12,23 +13,35 @@ const Cart = () => {
 	const TotalPrice = totalPrice(cart)
 	if (cart.length === 0) {
 		content = (
-			<div className="flex flex-col items-center gap-4 text-2xl font-medium">
+			
+			<AnimatePresence>
+			<motion.div
+				animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
+				initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+				exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+				className="flex flex-col items-center gap-3 text-2xl font-medium"
+			>
 				<button className="text-sm font-medium" onClick={() => toggleCart()}>
 					Back to store 🏃
 				</button>
 				<h1>Ohhh...it's empty ☹️</h1>
 				<SlBasket size={96} className="text-cyan-400" />
-			</div>
+
+			</motion.div>
+		</AnimatePresence>
 		);
 	}
 else {
 		content = (
-			<div
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
 			>
 				<h1>Here's is your shopping list 📃</h1>
 				{cart.map((item) => (
-					<div
-						
+					<motion.div
+						layout
 						key={item.id}
 						className="flex items-center py-4 gap-3"
 					>
@@ -39,7 +52,7 @@ else {
 							height={120}
 							alt={item.name}
 						/>
-						<div>
+						<motion.div layout>
 							<h2>{item.name}</h2>
 							<div className="flex gap-3">
 								<h2>Quantity: {item.quantity}</h2>
@@ -54,14 +67,18 @@ else {
 							<p className="text-sm text-teal-500">
 								{priceFormatter(item.price)}
 							</p>
-						</div>
-					</div>
+						</motion.div>
+					</motion.div>
 				))}
 				<p>Total: {priceFormatter(TotalPrice)}</p>
-				<button className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white">
-			Checkout
-		    </button>
-			</div>
+				<motion.div layout>
+				<button
+					className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white"
+				>
+					Checkout
+				</button>
+				</motion.div>	
+			</motion.div>
 		);
 		
 	}

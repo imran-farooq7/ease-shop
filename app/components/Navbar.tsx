@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCartStore } from "@/store/CartProvider";
 import Cart from "./Cart";
 import { AiFillShopping } from "react-icons/ai";
+import { AnimatePresence, motion } from "framer-motion";
 interface Props {
 	user: User;
 }
@@ -26,9 +27,18 @@ const Navbar = ({ user }: Props) => {
 			<ul className="flex items-center gap-5">
 				<li onClick={() => toggleCart()} className="relative cursor-pointer">
 					<AiFillShopping size={30} />
-					<span className="absolute flex items-center justify-center font-bold bg-teal-700 text-sm text-white rounded-full w-5 h-5 left-4 bottom-4">
-						{cart.length}
-					</span>
+					<AnimatePresence>
+						{cart.length > 0 && (
+							<motion.span
+								animate={{ scale: 1 }}
+								initial={{ scale: 0 }}
+								exit={{ scale: 0 }}
+								className="absolute flex items-center justify-center font-bold bg-teal-700 text-sm text-white rounded-full w-5 h-5 left-4 bottom-4"
+							>
+								{cart.length}
+							</motion.span>
+						)}
+					</AnimatePresence>
 				</li>
 				<li>
 					{!user && (
@@ -50,7 +60,8 @@ const Navbar = ({ user }: Props) => {
 					)}
 				</li>
 			</ul>
-			{isOpen && <Cart />}
+			<AnimatePresence>{isOpen && <Cart />}</AnimatePresence>
+
 		</nav>
 	);
 };
