@@ -3,9 +3,10 @@
 import { useCartStore } from "@/store/CartProvider";
 import { priceFormatter } from "@/utils/helpers";
 import Image from "next/image";
+import { IoRemoveCircle, IoAddCircle } from "react-icons/io5";
 
 const Cart = () => {
-	const { toggleCart, cart } = useCartStore();
+	const { toggleCart, cart, addCart, removeCart } = useCartStore();
 	return (
 		<div
 			onClick={() => toggleCart()}
@@ -27,16 +28,16 @@ const Cart = () => {
 						/>
 						<div>
 							<h2>{item.name}</h2>
-							{/* <div className="flex gap-3"> */}
-							<h2>Quantity: {item.quantity}</h2>
+							<div className="flex gap-3">
+								<h2>Quantity: {item.quantity}</h2>
 
-							{/* <button onClick={() => removeCart(item)}>
+								<button onClick={() => removeCart(item)}>
 									<IoRemoveCircle />
-								</button> */}
-							{/* <button onClick={() => addCart(item)}>
+								</button>
+								<button onClick={() => addCart(item)}>
 									<IoAddCircle />
-								</button> */}
-							{/* </div> */}
+								</button>
+							</div>
 							<p className="text-sm text-teal-500">
 								{priceFormatter(item.price)}
 							</p>
