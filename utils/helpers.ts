@@ -1,5 +1,6 @@
 import { cartItem } from "@/store/store";
 import { stripe } from "./Constants";
+import { loadStripe } from "@stripe/stripe-js";
 
 export const getProducts = async () => {
 	const products = await stripe.products.list();
@@ -31,3 +32,6 @@ export const totalPrice = (cart:cartItem[]) => {
 		return acc + item.price * item.quantity!;
 	}, 0);
 }
+export const stripePromise = loadStripe(
+	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+);

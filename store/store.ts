@@ -14,6 +14,12 @@ interface cartStore {
 	toggleCart: () => void;
 	addCart: (cartItem: cartItem) => void;
 	removeCart: (cartItem: cartItem) => void;
+	paymentIntent: string;
+	setPaymentIntent: (paymentIntent: string) => void;
+	onCheckout: string;
+
+
+
 }
 export const createCartStore = () => {
 	return createStore<cartStore>()(
@@ -21,6 +27,7 @@ export const createCartStore = () => {
 			(set) => ({
 				cart: [],
 				isOpen: true,
+				onCheckout: "cart",
 				toggleCart: () =>
 					set((state) => ({
 						...state,
@@ -72,6 +79,12 @@ export const createCartStore = () => {
 						}
 					});
 				},
+				paymentIntent:"",
+				setPaymentIntent: (val) =>
+					set((state) => ({
+						paymentIntent: val,
+					})),
+
 			}),
 
 			{ name: "cart" }
