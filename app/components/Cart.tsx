@@ -6,9 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { IoRemoveCircle, IoAddCircle } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
+import Checkout from "./Checkout";
 
 const Cart = () => {
-	const { toggleCart, cart, addCart, removeCart } = useCartStore();
+	const { toggleCart, cart, addCart, removeCart,onCheckout,setCheckout } = useCartStore();
 	let content: string | JSX.Element;
 	const TotalPrice = totalPrice(cart)
 	if (cart.length === 0) {
@@ -74,6 +75,7 @@ else {
 				<motion.div layout>
 				<button
 					className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white"
+					onClick={() => setCheckout("checkout")}
 				>
 					Checkout
 				</button>
@@ -81,6 +83,19 @@ else {
 			</motion.div>
 		);
 		
+	}
+	if (onCheckout === "checkout") {
+		content = (
+			<>
+				<button
+					className="text-sm font-medium mx-auto block mb-4"
+					onClick={() => setCheckout("cart")}
+				>
+					Back to cart 🛒
+				</button>
+				<Checkout />
+			</>
+		);
 	}
 
 	return (

@@ -2,11 +2,13 @@ import {StripeElementsOptions} from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/CartProvider";
+import { useRouter } from "next/navigation";
 
 
 const Checkout = () => {
     const { cart ,paymentIntent} = useCartStore();
     const [clientSecret, setClientSecret] = useState("");
+    const router = useRouter()
     const createCustomerPaymentIntent = async () => {
 		const res = await fetch("/api/create-payment-intent", {
 			method: "POST",
@@ -18,10 +20,11 @@ const Checkout = () => {
 				payment_intent_id: paymentIntent,
 			}),
 		});
-		// if (res.status === 403) {
-		// 	router.push("/api/auth/signin");
-		// }
+		if (res.status === 403) {
+			router.push("/api/auth/signin");
+		}
 		const data = await res.json();
+        return data
 		// setClientSecret(data.paymentIntent.client_secret);
 		// setPaymentIntent(data.paymentIntent.id);
 	};
@@ -30,7 +33,7 @@ useEffect(() => {
 },[])
   return (
     <div>
-      
+      <h1>Checkout</h1>
     </div>
   )
 }
