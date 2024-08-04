@@ -3,6 +3,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/CartProvider";
 import { useRouter } from "next/navigation";
+import { stripePromise } from "@/utils/helpers";
 
 
 const Checkout = () => {
@@ -30,9 +31,22 @@ const Checkout = () => {
 useEffect(() => {
     createCustomerPaymentIntent()
 },[])
+const options: StripeElementsOptions = {
+    clientSecret,
+    appearance: {
+        theme: "stripe",
+        labels: "floating",
+    },
+};
   return (
     <div>
-      <h1>Checkout</h1>
+      {clientSecret && (
+				<div>
+					<Elements stripe={stripePromise} options={options}>
+                        <h1>Check form</h1>
+					</Elements>
+				</div>
+			)}
     </div>
   )
 }
