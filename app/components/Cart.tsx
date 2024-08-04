@@ -7,32 +7,31 @@ import Image from "next/image";
 import { IoRemoveCircle, IoAddCircle } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
 import Checkout from "./Checkout";
+import OrderConfirmed from "./OrderConfirmed";
 
 const Cart = () => {
-	const { toggleCart, cart, addCart, removeCart,onCheckout,setCheckout } = useCartStore();
+	const { toggleCart, cart, addCart, removeCart, onCheckout, setCheckout } =
+		useCartStore();
 	let content: string | JSX.Element;
-	const TotalPrice = totalPrice(cart)
+	const TotalPrice = totalPrice(cart);
 	if (cart.length === 0) {
 		content = (
-			
 			<AnimatePresence>
-			<motion.div
-				animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
-				initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
-				exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
-				className="flex flex-col items-center gap-3 text-2xl font-medium"
-			>
-				<button className="text-sm font-medium" onClick={() => toggleCart()}>
-					Back to store 🏃
-				</button>
-				<h1>Ohhh...it's empty ☹️</h1>
-				<SlBasket size={96} className="text-cyan-400" />
-
-			</motion.div>
-		</AnimatePresence>
+				<motion.div
+					animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
+					initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+					exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+					className="flex flex-col items-center gap-3 text-2xl font-medium"
+				>
+					<button className="text-sm font-medium" onClick={() => toggleCart()}>
+						Back to store 🏃
+					</button>
+					<h1>Ohhh...it's empty ☹️</h1>
+					<SlBasket size={96} className="text-cyan-400" />
+				</motion.div>
+			</AnimatePresence>
 		);
-	}
-else {
+	} else {
 		content = (
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -73,16 +72,15 @@ else {
 				))}
 				<p>Total: {priceFormatter(TotalPrice)}</p>
 				<motion.div layout>
-				<button
-					className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white"
-					onClick={() => setCheckout("checkout")}
-				>
-					Checkout
-				</button>
-				</motion.div>	
+					<button
+						className="py-2 bg-teal-700 mt-4 w-full rounded-md text-white"
+						onClick={() => setCheckout("checkout")}
+					>
+						Checkout
+					</button>
+				</motion.div>
 			</motion.div>
 		);
-		
 	}
 	if (onCheckout === "checkout") {
 		content = (
@@ -96,6 +94,9 @@ else {
 				<Checkout />
 			</>
 		);
+	}
+	if (onCheckout === "success") {
+		content = <OrderConfirmed />;
 	}
 
 	return (
