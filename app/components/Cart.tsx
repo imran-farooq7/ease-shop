@@ -91,7 +91,7 @@ else {
 					className="text-sm font-medium mx-auto block mb-4"
 					onClick={() => setCheckout("cart")}
 				>
-					Back to cart 🛒
+					Check your cart 🛒
 				</button>
 				<Checkout />
 			</>

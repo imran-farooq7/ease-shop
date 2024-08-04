@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/CartProvider";
 import { useRouter } from "next/navigation";
 import { stripePromise } from "@/utils/helpers";
+import CheckoutForm from "./CheckoutForm";
 
 
 const Checkout = () => {
@@ -43,7 +44,7 @@ const options: StripeElementsOptions = {
       {clientSecret && (
 				<div>
 					<Elements stripe={stripePromise} options={options}>
-                        <h1>Check form</h1>
+                        <CheckoutForm clientSecret={clientSecret} />
 					</Elements>
 				</div>
 			)}
