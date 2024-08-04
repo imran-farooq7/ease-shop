@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 const Checkout = () => {
-    const { cart ,paymentIntent} = useCartStore();
+    const { cart ,paymentIntent,setPaymentIntent} = useCartStore();
     const [clientSecret, setClientSecret] = useState("");
     const router = useRouter()
     const createCustomerPaymentIntent = async () => {
@@ -24,9 +24,8 @@ const Checkout = () => {
 			router.push("/api/auth/signin");
 		}
 		const data = await res.json();
-        return data
-		// setClientSecret(data.paymentIntent.client_secret);
-		// setPaymentIntent(data.paymentIntent.id);
+		setClientSecret(data.paymentIntent.client_secret);
+		setPaymentIntent(data.paymentIntent.id);
 	};
 useEffect(() => {
     createCustomerPaymentIntent()
