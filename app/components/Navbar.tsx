@@ -50,18 +50,25 @@ const Navbar = ({ user }: Props) => {
 						</button>
 					)}
 					{user && (
-						<Image
-							src={user.image!}
-							width={40}
-							height={40}
-							alt={user.name!}
-							className="rounded-full"
-						/>
+						<div className="flex gap-3 items-center">
+							<Image
+								src={user.image!}
+								width={40}
+								height={40}
+								alt={user.name!}
+								className="rounded-full"
+							/>
+							<button
+								className="bg-red-400 px-6 py-3 rounded-lg text-white text-sm hover:bg-red-600"
+								onClick={() => signOut()}
+							>
+								Sign Out
+							</button>
+						</div>
 					)}
 				</li>
 			</ul>
 			<AnimatePresence>{isOpen && <Cart />}</AnimatePresence>
-
 		</nav>
 	);
 };
